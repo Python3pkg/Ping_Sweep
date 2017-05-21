@@ -1,1 +1,1 @@
-from ping_sweep import *
+from .ping_sweep import *

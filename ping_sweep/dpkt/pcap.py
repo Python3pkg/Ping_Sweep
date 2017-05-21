@@ -3,10 +3,10 @@
 """Libpcap file format."""
 
 import sys, time
-import dpkt
+from . import dpkt
 
-TCPDUMP_MAGIC = 0xa1b2c3d4L
-PMUDPCT_MAGIC = 0xd4c3b2a1L
+TCPDUMP_MAGIC = 0xa1b2c3d4
+PMUDPCT_MAGIC = 0xd4c3b2a1
 
 PCAP_VERSION_MAJOR = 2
 PCAP_VERSION_MINOR = 4
@@ -109,7 +109,7 @@ class Reader(object):
             self.__fh = LEFileHdr(buf)
             self.__ph = LEPktHdr
         elif self.__fh.magic != TCPDUMP_MAGIC:
-            raise ValueError, 'invalid tcpdump header'
+            raise ValueError('invalid tcpdump header')
         if self.__fh.linktype in dltoff:
             self.dloff = dltoff[self.__fh.linktype]
         else:
@@ -132,7 +132,7 @@ class Reader(object):
     def dispatch(self, cnt, callback, *args):
         if cnt > 0:
             for i in range(cnt):
-                ts, pkt = self.next()
+                ts, pkt = next(self)
                 callback(ts, pkt, *args)
         else:
             for ts, pkt in self:

@@ -2,7 +2,7 @@
 
 """Secure Sockets Layer / Transport Layer Security."""
 
-import dpkt
+from . import dpkt
 
 class SSL2(dpkt.Packet):
     __hdr__ = (

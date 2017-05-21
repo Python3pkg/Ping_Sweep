@@ -108,7 +108,7 @@ def checksum(source_string):
     """
     sum = 0
     count_to = (len(source_string) / 2) * 2
-    for count in xrange(0, count_to, 2):
+    for count in range(0, count_to, 2):
         this = ord(source_string[count + 1]) * 256 + ord(source_string[count])
         sum = sum + this
         sum = sum & 0xffffffff # Necessary?
@@ -193,7 +193,8 @@ def do_one(dest_addr, timeout, psize):
     icmp = socket.getprotobyname("icmp")
     try:
         my_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, icmp)
-    except socket.error, (errno, msg):
+    except socket.error as xxx_todo_changeme:
+        (errno, msg) = xxx_todo_changeme.args
         if errno == 1:
             # Operation not permitted
             msg = msg + (
@@ -217,20 +218,20 @@ def verbose_ping(dest_addr, timeout = 2, count = 4, psize = 64):
     Send `count' ping with `psize' size to `dest_addr' with
     the given `timeout' and display the result.
     """
-    for i in xrange(count):
-        print "ping %s with ..." % dest_addr,
+    for i in range(count):
+        print("ping %s with ..." % dest_addr, end=' ')
         try:
             delay  =  do_one(dest_addr, timeout, psize)
-        except socket.gaierror, e:
-            print "failed. (socket error: '%s')" % e[1]
+        except socket.gaierror as e:
+            print("failed. (socket error: '%s')" % e[1])
             break
 
         if delay  ==  None:
-            print "failed. (timeout within %ssec.)" % timeout
+            print("failed. (timeout within %ssec.)" % timeout)
         else:
             delay  =  delay * 1000
-            print "get ping in %0.4fms" % delay
-    print
+            print("get ping in %0.4fms" % delay)
+    print()
 
 
 def quiet_ping(dest_addr, timeout = 2, count = 4, psize = 64):
@@ -245,11 +246,11 @@ def quiet_ping(dest_addr, timeout = 2, count = 4, psize = 64):
     lost = 0
     plist = []
 
-    for i in xrange(count):
+    for i in range(count):
         try:
             delay = do_one(dest_addr, timeout, psize)
-        except socket.gaierror, e:
-            print "failed. (socket error: '%s')" % e[1]
+        except socket.gaierror as e:
+            print("failed. (socket error: '%s')" % e[1])
             break
 
         if delay != None:

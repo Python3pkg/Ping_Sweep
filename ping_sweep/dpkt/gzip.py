@@ -3,7 +3,7 @@
 """GNU zip."""
 
 import struct, zlib
-import dpkt
+from . import dpkt
 
 # RFC 1952
 GZIP_MAGIC	= '\x1f\x8b'
@@ -114,4 +114,4 @@ class Gzip(dpkt.Packet):
 if __name__ == '__main__':
     import sys
     gz = Gzip(open(sys.argv[1]).read())
-    print `gz`, `gz.decompress()`
+    print(repr(gz), repr(gz.decompress()))

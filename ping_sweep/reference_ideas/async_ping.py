@@ -5,7 +5,7 @@ A pure Python ping implementation using raw socket.
 Note that ICMP messages can only be sent from processes running as root.
 """
 
-from __future__ import division, print_function #, unicode_literals
+ #, unicode_literals
 
 import dpkt
 import time
@@ -231,7 +231,7 @@ def ping_multi(host_name, verbosity=1):
     # I think this number should be small: 10 - 50 ms???
 
     # Setup the sockets.
-    powers = range(8)
+    powers = list(range(8))
     # powers = [6]*5
 
     socks = []

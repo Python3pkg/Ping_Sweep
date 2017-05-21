@@ -4,7 +4,7 @@
 with automatic 802.1q, MPLS, PPPoE, and Cisco ISL decapsulation."""
 
 import struct
-import dpkt, stp
+from . import dpkt, stp
 
 ETH_CRC_LEN	= 4
 ETH_HDR_LEN	= 14
@@ -114,7 +114,7 @@ class Ethernet(dpkt.Packet):
 # XXX - auto-load Ethernet dispatch table from ETH_TYPE_* definitions
 def __load_types():
     g = globals()
-    for k, v in g.iteritems():
+    for k, v in g.items():
         if k.startswith('ETH_TYPE_'):
             name = k[9:]
             modname = name.lower()

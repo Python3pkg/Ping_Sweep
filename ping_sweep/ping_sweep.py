@@ -21,7 +21,7 @@
 Perform a sequence of pings over a range of payload sizes
 """
 
-from __future__ import division, print_function #, unicode_literals
+ #, unicode_literals
 
 import argparse
 import os
@@ -30,7 +30,7 @@ import time
 import socket
 import random
 
-import dpkt
+from . import dpkt
 
 
 #################################################

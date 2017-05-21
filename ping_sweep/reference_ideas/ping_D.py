@@ -146,7 +146,8 @@ def do_one(dest_addr, timeout=1):
    """
     try:
         my_socket = socket.socket(socket.AF_INET, socket.SOCK_RAW, ICMP_CODE)
-    except socket.error, (errno, msg):
+    except socket.error as xxx_todo_changeme1:
+        (errno, msg) = xxx_todo_changeme1.args
         if errno in ERROR_DESCR:
             # Operation not permitted
             raise socket.error(''.join((msg, ERROR_DESCR[errno])))
@@ -200,15 +201,15 @@ def verbose_ping(dest_addr, timeout=2, count=4):
    Displays the result on the screen.
    
    """
-    for i in xrange(count):
-        print 'ping {}...'.format(dest_addr),
+    for i in range(count):
+        print('ping {}...'.format(dest_addr), end=' ')
         delay = do_one(dest_addr, timeout)
         if delay == None:
-            print 'failed. (Timeout within {} seconds.)'.format(timeout)
+            print('failed. (Timeout within {} seconds.)'.format(timeout))
         else:
             delay = round(delay * 1000.0, 4)
-            print 'get ping in {} milliseconds.'.format(delay)
-    print
+            print('get ping in {} milliseconds.'.format(delay))
+    print()
  
  
 class PingQuery(asyncore.dispatcher):
@@ -235,7 +236,8 @@ class PingQuery(asyncore.dispatcher):
         asyncore.dispatcher.__init__(self)
         try:
             self.create_socket(socket.AF_INET, socket.SOCK_RAW, ICMP_CODE)
-        except socket.error, (errno, msg):
+        except socket.error as xxx_todo_changeme:
+            (errno, msg) = xxx_todo_changeme.args
             if errno in ERROR_DESCR:
                 # Operation not permitted
                 raise socket.error(''.join((msg, ERROR_DESCR[errno])))
@@ -360,5 +362,5 @@ if __name__ == '__main__':
     verbose_ping('127.0.0.1')
     host_list = ['www.heise.de', 'google.com', '127.0.0.1',
                  'an-invalid-test-url.com']
-    for host, ping in multi_ping_query(host_list).iteritems():
-        print host, '=', ping
+    for host, ping in multi_ping_query(host_list).items():
+        print(host, '=', ping)

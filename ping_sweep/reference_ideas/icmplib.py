@@ -209,7 +209,7 @@ BUFSIZE = 1500
 
 
 def ping(addr):
-    print( "PING (%s): %d data bytes" % (addr,datalen) )
+    print(( "PING (%s): %d data bytes" % (addr,datalen) ))
 
     ## create socket
     s = socket.socket(socket.AF_INET,socket.SOCK_RAW,
@@ -246,7 +246,7 @@ def ping(addr):
         ## calculate rounttrip time
         rtt =  current_time - timestamp
         rtt *= 1000
-        print( "%d bytes from %s: id=%s, seq=%u, rtt=%.3f ms" % (len(buf), addr, ident, seq, rtt) )
+        print(( "%d bytes from %s: id=%s, seq=%u, rtt=%.3f ms" % (len(buf), addr, ident, seq, rtt) ))
         time.sleep(1)
         
 if __name__=='__main__':

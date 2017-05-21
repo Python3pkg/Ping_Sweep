@@ -2,7 +2,7 @@
 
 """Internet Protocol."""
 
-import dpkt
+from . import dpkt
 
 class IP(dpkt.Packet):
     __hdr__ = (
@@ -53,7 +53,7 @@ class IP(dpkt.Packet):
         dpkt.Packet.unpack(self, buf)
         ol = ((self.v_hl & 0xf) << 2) - self.__hdr_len__
         if ol < 0:
-            raise dpkt.UnpackError, 'invalid header length'
+            raise dpkt.UnpackError('invalid header length')
         self.opts = buf[self.__hdr_len__:self.__hdr_len__ + ol]
         buf = buf[self.__hdr_len__ + ol:self.len]
         try:
@@ -242,7 +242,7 @@ IP_PROTO_MAX		= 255
 # XXX - auto-load IP dispatch table from IP_PROTO_* definitions
 def __load_protos():
     g = globals()
-    for k, v in g.iteritems():
+    for k, v in g.items():
         if k.startswith('IP_PROTO_'):
             name = k[9:].lower()
             try:
@@ -259,7 +259,7 @@ if __name__ == '__main__':
     
     class IPTestCase(unittest.TestCase):
         def test_IP(self):
-            import udp
+            from . import udp
             s = 'E\x00\x00"\x00\x00\x00\x00@\x11r\xc0\x01\x02\x03\x04\x01\x02\x03\x04\x00o\x00\xde\x00\x0e\xbf5foobar'
             ip = IP(id=0, src='\x01\x02\x03\x04', dst='\x01\x02\x03\x04', p=17)
             u = udp.UDP(sport=111, dport=222)

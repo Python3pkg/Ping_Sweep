@@ -195,7 +195,7 @@ class IOCPManager:
 
     def UnregisterChannelObject(self, c):
         k = id(c)
-        if self.overlappedByID.has_key(k):
+        if k in self.overlappedByID:
             del self.overlappedByID[k]
 
 
@@ -304,7 +304,7 @@ class FileObject(BaseFileObject):
             disposition = OPEN_EXISTING
         dummyp = c_void_p()
 
-        if isinstance(filename, unicode):
+        if isinstance(filename, str):
             func = CreateFileW
         else:
             func = CreateFileA
@@ -421,5 +421,5 @@ def Test(s):
     f.seek(100)
     v = f.read()
     f.close()
-    print len(v)
+    print(len(v))
 
